@@ -8,7 +8,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
 {
     internal class Session_02
     {
-        public static void Main()
+        public static void Main2()
         {
             //Question_01();
             Question_06();
