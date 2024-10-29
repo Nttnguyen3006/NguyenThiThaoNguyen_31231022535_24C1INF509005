@@ -14,7 +14,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
         public static void Main()
         {
             //Ex_01();
-            Ex_10();
+            Ex_07();
             Console.ReadKey();
         }
         public static void Ex_01()
