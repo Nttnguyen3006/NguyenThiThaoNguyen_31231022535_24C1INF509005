@@ -14,7 +14,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
         public static void Main()
         {
             //Ex_01();
-            Ex_07();
+            Ex_10();
             Console.ReadKey();
         }
         public static void Ex_01()
@@ -180,6 +180,80 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
                 }
 
                 Console.WriteLine();
+            }
+        }
+        public static void Ex_08()
+        {
+            Console.Write("Input the number of terms: ");
+            int  n =int.Parse(Console.ReadLine());
+            double sum = 0.0;
+
+            Console.Write("Harmonic series: ");
+
+            for (int i = 1; i <= n; i++)
+            {
+                Console.Write($"1/{i} ");
+                if (i < n)
+                {
+                    Console.Write("+ ");
+                }
+
+                sum += 1.0 / i;
+            }
+
+            Console.WriteLine($"\nSum of harmonic series up to {n} terms: {sum}");
+        }
+        public static void Ex_09()
+        {
+            int n, i, sum;
+            Console.Write("Nhap so bat dau: ");
+            int min=int.Parse(Console.ReadLine());
+            Console.Write("Nhap so ket thuc: ");
+            int max=int.Parse(Console.ReadLine());
+            Console.Write("Cac so hoan hao trong day la: ");
+            for (n= min; n <= max; n++)
+            {
+                i = 1;
+                sum= 0;
+                while (i < n)  //Vòng lặp tính tổng ước số của mỗi số trong phạm vi
+                {
+                    if (n % i == 0)
+                        sum += i;
+                    i++;
+                }
+                if (sum ==n)
+                    Console.Write($" {n}");
+            }
+        }
+        public static void Ex_10()
+        {
+            Console.Write("Nhap mot so: ");
+            int num = int.Parse(Console.ReadLine());
+            bool isPrime = true;
+
+            if (num <= 1)
+            {
+                isPrime = false;
+            }
+            else
+            {
+                for (int i = 2; i <= Math.Sqrt(num); i++)
+                {
+                    if (num % i == 0)
+                    {
+                        isPrime = false;
+                        break;
+                    }
+                }
+            }
+
+            if (isPrime)
+            {
+                Console.WriteLine($"{num} la so nguyen to.");
+            }
+            else
+            {
+                Console.WriteLine($"{num} khong la so nguyen to.");
             }
         }
     }
