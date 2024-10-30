@@ -11,10 +11,10 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
 {
     internal class Session_03
     {
-        public static void Main()
+        public static void Main3()
         {
             //Ex_01();
-            Ex_07();
+            Ex_11();
             Console.ReadKey();
         }
         public static void Ex_01()
@@ -254,6 +254,18 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
             else
             {
                 Console.WriteLine($"{num} khong la so nguyen to.");
+            }
+        }
+        public static void Ex_11()
+        {
+            Console.Write("Nhap mot so: ");
+            int a=int.Parse(Console.ReadLine());
+            int b;
+            Console.WriteLine($"Bang cuu chuong {a}: ");
+            for (int i = 1; i<=10;  i++)
+            {
+                b = a * i;
+                Console.WriteLine($"{a}*{i}={b}");
             }
         }
     }
