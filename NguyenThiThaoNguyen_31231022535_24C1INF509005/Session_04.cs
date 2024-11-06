@@ -143,7 +143,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
             return true;
         }
 
-        static void Main(string[] args)
+        static void Main46(string[] args)
         {
             Console.Write("Enter a sentence: ");
             string sentence = Console.ReadLine();
