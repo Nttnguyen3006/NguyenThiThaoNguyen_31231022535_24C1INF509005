@@ -16,7 +16,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
                 array[i] += 2;
             }
         }
-        static void Main(string[] args)
+        static void Main5(string[] args)
         {
             Console.Write("Nhap so phan tu cua day: ");
             int n=int.Parse(Console.ReadLine());
