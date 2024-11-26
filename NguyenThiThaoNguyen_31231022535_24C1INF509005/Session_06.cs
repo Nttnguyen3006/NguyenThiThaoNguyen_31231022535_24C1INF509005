@@ -34,6 +34,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
         }
         static void InHangHoacCot(int[,] a, int index, bool isRow)
         {
+            
             if (isRow)
             {
                 // Print the i-th row
@@ -41,7 +42,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
                 {
                     for (int j = 0; j < a.GetLength(0); j++)
                     {
-                        Console.Write(a[(index-1), j] + "\t");
+                        Console.Write(a[index, j] + "\t");
                     }
                     Console.WriteLine();
                 }
@@ -57,7 +58,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
                 {
                     for (int i = 0; i < a.GetLength(1); i++)
                     {
-                        Console.Write(a[i, index-1] + "\t");
+                        Console.Write(a[i, index] + "\t");
                     }
                     Console.WriteLine();
                 }
@@ -79,6 +80,15 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
         }
         static int FindMinInRowOrColumn(int[,] a, int index, bool isRow)
         {
+            if (isRow && (index < 1 || index > a.GetLength(0)))
+            {
+                throw new ArgumentException($"Invalid row index. Please enter a number between 1 and {a.GetLength(0)}.");
+            }
+            else if (!isRow && (index < 1 || index > a.GetLength(1)))
+            {
+                throw new ArgumentException($"Invalid column index. Please enter a number between 1 and {a.GetLength(1)}.");
+            }
+            
             int min;
             /* cach tim min trong hang/cot 1:
              int min = isRow ? matrix[index, 0] : matrix[0, index];*/
@@ -86,22 +96,22 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
             if (isRow)
             {
                 // Tìm giá trị nhỏ nhất trong hàng 
-                min = a[index, 0];  // Khởi tạo min bằng phần tử đầu tiên của hàng
-                for (int j = 1; j < a.GetLength(0); j++)
+                min = a[index, 0];
+                for (int j = 1; j < a.GetLength(0); j++) // Đúng kích thước cột
                 {
                     if (a[index, j] < min)
                         min = a[index, j];
                 }
+            
             }
             else
             {
-                // Tìm giá trị nhỏ nhất trong cột 
-                min = a[0, index];
-                for (int i = 1; i < a.GetLength(1); i++)
-                {
-                    if (a[i, index] < min)
-                        min = a[i, index];
-                }
+                    min = a[0, index];
+                    for (int i = 1; i < a.GetLength(1); i++) // Đúng kích thước hàng
+                    {
+                        if (a[i, index] < min)
+                            min = a[i, index];
+                    }
             }
             return min;
         }
@@ -125,13 +135,13 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
             for (int i = 0; i < size; i++)
             {
                 // Print main diagonal element
-                Console.Write($"Main: {a[i, i]}, ");
+                Console.Write($"Main: {a[i, i]} ");
 
                 // Print secondary diagonal element
                 Console.WriteLine($"Secondary: {a[i, a.GetLength(1) - i - 1]}");
             }
         }
-        static void Main(string[] args)
+        static void Main6(string[] args)
         {
             // Step 1: Get matrix dimensions from the user
             Console.Write("Enter the number of rows: ");
@@ -172,7 +182,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
 
             // Step 7: Transpose the matrix
             int[,] transpose = new int[a.GetLength(1), a.GetLength(0)];// Tạo ma trận chuyển vị
-            TransposeMatrix(a, transpose);  // Gọi hàm TransposeMatrix để thay đổi transpose
+            TransposeMatrix( transpose, a);  // Gọi hàm TransposeMatrix để thay đổi transpose
             Console.WriteLine("\nTransposed Matrix:");
             InMang(transpose);
 
