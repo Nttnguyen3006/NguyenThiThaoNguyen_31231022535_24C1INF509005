@@ -8,187 +8,249 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
 {
     internal class Session_06
     {
-        static int[,] NhapNgauNhien(int rows, int cols)
+        public static int[,] TaoMaTran(int soDong, int soCot, int soNho, int soLon)
         {
-            Random rnd = new Random();
-            int[,] a = new int[rows, cols];
-            for (int i = 0; i < rows; i++)
+            int[,] matran = new int[soDong, soCot];
+            Random rand = new Random();
+            for (int i = 0; i < soDong; i++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < soCot; j++)
                 {
-                    a[i, j] = rnd.Next(0, 100);
+
+                    matran[i, j] = rand.Next(soNho, soLon + 1);
                 }
             }
-            return a;
+            return matran;
         }
-        static void InMang(int[,] a)
+
+        public static void HienThiMaTran(int[,] matran)
         {
-            for (int i = 0; i < a.GetLength(0); i++)
+            int Dong = matran.GetLength(0);
+            int Cot = matran.GetLength(1);
+
+            for (int i = 0; i < Dong; i++)
             {
-                for (int j = 0; j < a.GetLength(1); j++)
+                for (int j = 0; j < Cot; j++)
                 {
-                    Console.Write(a[i, j] + "\t");
+                    Console.Write($"{matran[i, j],5}");
                 }
                 Console.WriteLine();
             }
         }
-        static void InHangHoacCot(int[,] a, int index, bool isRow)
+
+        public static void InHangThuI(int[,] matran, int hang)
         {
-            
-            if (isRow)
+            int Cot = matran.GetLength(1);
+            if (hang < 0 || hang > matran.GetLength(0))
             {
-                // Print the i-th row
-                if (index >= 0 && index < a.GetLength(0))
-                {
-                    for (int j = 0; j < a.GetLength(0); j++)
-                    {
-                        Console.Write(a[index, j] + "\t");
-                    }
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid row index.");
-                }
+                Console.WriteLine("Hang khong hop le");
+                return;
             }
-            else
+            Console.Write($"Hang thu {hang}: ");
+            for (int j = 0; j < Cot; j++)
             {
-                // Print the i-th column
-                if (index >= 0 && index < a.GetLength(1))
-                {
-                    for (int i = 0; i < a.GetLength(1); i++)
-                    {
-                        Console.Write(a[i, index] + "\t");
-                    }
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid column index.");
-                }
+                Console.Write($"{matran[hang, j],5}");
             }
+            Console.WriteLine();
         }
-        static int FindMax(int[,] a)
+        public static void InCotThuJ(int[,] matran, int cot)
         {
-            int max = a[0, 0];
-            foreach (var value in a)
+            int Dong = matran.GetLength(0);
+            if (cot < 0 || cot > matran.GetLength(1))
             {
-                if (value > max)
-                    max = value;
+                Console.WriteLine("Hang khong hop le");
+                return;
             }
-            return max;
+            Console.Write($"Cot thu {cot}: ");
+            for (int i = 0; i < Dong; i++)
+            {
+                Console.WriteLine($"{matran[i, cot],5}");
+            }
+            Console.WriteLine();
         }
-        static int FindMinInRowOrColumn(int[,] a, int index, bool isRow)
+
+
+        //In gia tri lon nhat trong ma tran
+        public static int GiatriMax(int[,] matran)
         {
-            if (isRow && (index < 1 || index > a.GetLength(0)))
+            int giatriMax = int.MinValue;
+            for (int i = 0; i < matran.GetLength(0); i++)
             {
-                throw new ArgumentException($"Invalid row index. Please enter a number between 1 and {a.GetLength(0)}.");
-            }
-            else if (!isRow && (index < 1 || index > a.GetLength(1)))
-            {
-                throw new ArgumentException($"Invalid column index. Please enter a number between 1 and {a.GetLength(1)}.");
-            }
-            
-            int min;
-            /* cach tim min trong hang/cot 1:
-             int min = isRow ? matrix[index, 0] : matrix[0, index];*/
-            //cach 2:
-            if (isRow)
-            {
-                // Tìm giá trị nhỏ nhất trong hàng 
-                min = a[index, 0];
-                for (int j = 1; j < a.GetLength(0); j++) // Đúng kích thước cột
+                for (int j = 0; j < matran.GetLength(1); j++)
                 {
-                    if (a[index, j] < min)
-                        min = a[index, j];
-                }
-            
-            }
-            else
-            {
-                    min = a[0, index];
-                    for (int i = 1; i < a.GetLength(1); i++) // Đúng kích thước hàng
-                    {
-                        if (a[i, index] < min)
-                            min = a[i, index];
-                    }
-            }
-            return min;
-        }
-        static void TransposeMatrix(int[,] transpose, int[,] a)
-        {
-            int rows = a.GetLength(0);
-            int cols = a.GetLength(1);
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    transpose[j, i] = a[i, j];
+                    if (matran[i, j] > giatriMax)
+                        giatriMax = matran[i, j];
                 }
             }
+            return giatriMax;
         }
-        static void PrintDiagonals(int[,] a)
-        {
-            int size = Math.Min(a.GetLength(0), a.GetLength(1));
 
-            Console.WriteLine("\nMain and secondary diagonals:");
-            for (int i = 0; i < size; i++)
+        //In gia tri nho nhat trong ma tran
+        public static int GiatriMin(int[,] matran)
+        {
+            int giatriMin = int.MaxValue;
+            for (int i = 0; i < matran.GetLength(0); i++)
             {
-                // Print main diagonal element
-                Console.Write($"Main: {a[i, i]} ");
-
-                // Print secondary diagonal element
-                Console.WriteLine($"Secondary: {a[i, a.GetLength(1) - i - 1]}");
+                for (int j = 0; j < matran.GetLength(1); j++)
+                {
+                    if (matran[i, j] < giatriMin)
+                        giatriMin = matran[i, j];
+                }
             }
+            return giatriMin;
         }
-        static void Main6(string[] args)
+
+        public static void Giatrinhocuahang(int[,] matran)
         {
-            // Step 1: Get matrix dimensions from the user
-            Console.Write("Enter the number of rows: ");
-            int rows = int.Parse(Console.ReadLine());
+            Console.Write("Nhap so hang ma ban muon tim gia tri nho nhat: ");
+            int giatriHang = int.Parse(Console.ReadLine());
+            if (giatriHang < 0 || giatriHang > matran.GetLength(0))
+            {
+                Console.WriteLine("Hang khong hop le! Vui long nhap lai");
+                return;
+            }
+            int giatriNho = matran[giatriHang, 0];
+            for (int j = 1; j < matran.GetLength(1); j++)
+            {
+                if (matran[giatriHang, j] < giatriNho)
+                    giatriNho = matran[giatriHang, j];
+            }
+            Console.WriteLine($"Gia tri nho nhat trong hang {giatriHang} la: {giatriNho}");
 
-            Console.Write("Enter the number of columns: ");
-            int cols = int.Parse(Console.ReadLine());
-
-            // Step 2: Create the matrix
-            int[,] a = NhapNgauNhien(rows, cols);
-
-            // Step 3: Print the matrix
-            Console.WriteLine("\nOriginal Matrix:");
-            InMang(a);
-
-            // Step 4: Print specific row or column
-            Console.Write("\nEnter the index (i) of the row/column you want to print: ");
-            int index = int.Parse(Console.ReadLine());
-
-            Console.Write("Do you want to print a row (r) or a column (c)? ");
-            string choice = Console.ReadLine().ToLower();
-            bool isRow = choice == "r";
-            InHangHoacCot(a, index, isRow);
-
-            // Step 5: Find max value in the matrix
-            int max = FindMax(a);
-            Console.WriteLine($"\nMax value in the matrix: {max}");
-
-            // Step 6: Find min value in the i-th row/column
-            Console.Write("\nEnter the index (i) of the row/column for min value search: ");
-            index = int.Parse(Console.ReadLine());
-
-            Console.Write("Do you want to find min in a row (r) or a column (c)? ");
-            choice = Console.ReadLine().ToLower();
-            isRow = choice == "r";
-            int min = FindMinInRowOrColumn(a, index, isRow);
-            Console.WriteLine($"Min value in the {(isRow ? "row" : "column")} {index}: {min}");
-
-            // Step 7: Transpose the matrix
-            int[,] transpose = new int[a.GetLength(1), a.GetLength(0)];// Tạo ma trận chuyển vị
-            TransposeMatrix( transpose, a);  // Gọi hàm TransposeMatrix để thay đổi transpose
-            Console.WriteLine("\nTransposed Matrix:");
-            InMang(transpose);
-
-            // Step 8: Print diagonals
-            PrintDiagonals(a);
         }
+
+
+
+        public static void Giatrinhocuacot(int[,] matran)
+        {
+            Console.Write("Nhap so cot ban tim gia tri nho nhat: ");
+            int giatriCot = int.Parse(Console.ReadLine());
+            if (giatriCot < 0 || giatriCot > matran.GetLength(0))
+            {
+                Console.WriteLine("Cot khong hop le! Vui long nhap lai");
+                return;
+            }
+            int giatrinho = matran[0, giatriCot];
+            for (int i = 1; i < matran.GetLength(1); i++)
+            {
+                if (matran[i, giatriCot] < giatrinho)
+                    giatrinho = matran[i, giatriCot];
+            }
+            Console.WriteLine($"Gia tri nho nhat trong cot {giatriCot} la: {giatrinho}");
+        }
+
+        public static int[,] Chuyenvimatran(int[,] matran)
+        {
+            int soDong = matran.GetLength(0);
+            int soCot = matran.GetLength(1);
+
+            int[,] matranchuyenvi = new int[soCot, soDong];
+
+            for (int i = 0; i < soDong; i++)
+            {
+                for (int j = 0; j < soCot; j++)
+                {
+                    matranchuyenvi[j, i] = matran[i, j];
+                }
+            }
+            return matranchuyenvi;
+        }
+
+        public static void InDuongCheo(int[,] matran)
+        {
+            int soDong = matran.GetLength(0);
+            int soCot = matran.GetLength(1);
+
+            if (soDong != soCot)
+            {
+                Console.WriteLine("Ma tran khong phai la ma tran vuong. Ma tran khong co duong cheo chinh và duong cheo phu");
+                return;
+            }
+            Console.WriteLine("Cac gia tri tren duong cheo chinh");
+            for (int i = 0; i < soDong; i++)
+            {
+                Console.WriteLine(matran[i, i] + "\t");
+
+            }
+
+            Console.WriteLine("Cac gia tri tren duong cheo phu");
+            for (int i = 0; i < soDong; i++)
+            {
+                Console.WriteLine(matran[i, soDong - 1 - i] + "\t");
+            }
+
+        }
+        public static void Main6()
+        {
+            Console.WriteLine("NHAP THONG TIN CHO MA TRAN");
+            Console.Write("Nhap so dong: ");
+            int sodong = int.Parse(Console.ReadLine());
+            Console.Write("Nhap so cot: ");
+            int socot = int.Parse(Console.ReadLine());
+            Console.Write("Nhap gia tri nho nhat: ");
+            int min = int.Parse(Console.ReadLine());
+            Console.Write("Nhap gia tri lon nhat: ");
+            int max = int.Parse(Console.ReadLine());
+
+
+
+            int[,] matran = TaoMaTran(sodong, socot, min, max);
+            Console.WriteLine("Ma tran ngau nhien duoc tao: ");
+            HienThiMaTran(matran);
+
+
+
+            Console.WriteLine();
+            Console.Write("IN HANG TRONG MA TRAN (bat dau tu 0): ");
+            int hang = int.Parse(Console.ReadLine());
+            InHangThuI(matran, hang);
+
+
+            Console.WriteLine();
+            Console.Write("IN COT TRONG MA TRAN( bat dau tu 0): ");
+            int cot = int.Parse(Console.ReadLine());
+            InCotThuJ(matran, cot);
+
+
+
+            Console.WriteLine();
+            Console.WriteLine("TIM GIA TRI MAX TRONG MA TRAN");
+            int giatrilonnhat = GiatriMax(matran);
+            Console.WriteLine($"Gia tri lon nhat trong ma tran: {giatrilonnhat}");
+
+
+            Console.WriteLine();
+            Console.WriteLine("TIM GIA TRI MIN THEO HANG TRONG MA TRAN");
+            int giatrinhonhat = GiatriMin(matran);
+            Console.WriteLine($"Gia tri nho nhat trong ma tran: {giatrinhonhat}");
+
+
+            Console.WriteLine();
+            Console.WriteLine("TIM GIA TRI MIN TRONG HANG DO NGUOI DUNG NHAP VAO");
+            Giatrinhocuahang(matran);
+
+
+
+            Console.WriteLine();
+            Console.WriteLine("TIM GIA TRI MIN THEO COT TRONG MA TRAN");
+            Giatrinhocuacot(matran);
+
+
+
+            Console.WriteLine();
+            Console.WriteLine("MA TRAN CHUYEN VI");
+            int[,] matranChuyenVi = Chuyenvimatran(matran);
+            Console.WriteLine("Ma tran sau khi chuyen vi: ");
+            HienThiMaTran(matranChuyenVi);
+
+
+            Console.WriteLine();
+            Console.WriteLine("IN RA CAC DUONG CHEO CHINH VA DUONG CHEO PHU");
+            InDuongCheo(matran);
+            Console.ReadKey();
+        }
+
     }
 }
 
+    

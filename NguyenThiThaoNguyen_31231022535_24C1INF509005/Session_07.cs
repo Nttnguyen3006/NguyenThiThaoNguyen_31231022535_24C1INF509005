@@ -8,7 +8,7 @@ namespace NguyenThiThaoNguyen_31231022535_24C1INF509005
 {
     internal class Session_07
     {
-        static void Main(string[] args)
+        static void Main7(string[] args)
         {
             // 1. Khởi tạo mảng Jagged và hiển thị
             int[][] jaggedArray = new int[4][]; // Mảng Jagged với 4 hàng
